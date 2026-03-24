@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remodelación Casa · Huinganes · Eduardo Ulloa</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e14;
+    --surface: #121720;
+    --card: #181f2b;
+    --border: #232d3f;
+    --accent: #e8b84b;
+    --accent2: #4be8c4;
+    --accent3: #e84b6e;
+    --text: #e8eaf0;
+    --muted: #6b7a9a;
+    --dim: #3a4460;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    position: relative;
+    padding: 60px 24px;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,184,75,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,184,75,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridDrift 20s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,184,75,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -55%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: translate(-50%, -55%) scale(1); }
+    50%       { opacity: 1;   transform: translate(-50%, -55%) scale(1.08); }
+  }
+
+  .hero-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    background: rgba(232,184,75,0.1);
+    border: 1px solid rgba(232,184,75,0.25);
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 10vw, 120px);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+    text-align: center;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .hero-title span { color: var(--accent); }
+
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 18px;
+    color: var(--muted);
+    font-weight: 300;
+    text-align: center;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .hero-meta {
+    margin-top: 48px;
+    display: flex; gap: 40px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.9s 0.35s ease both;
+  }
+
+  .meta-item {
+    text-align: center;
+  }
+  .meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--text);
+    letter-spacing: 0.05em;
+  }
+  .meta-value.gold { color: var(--accent); }
+
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--muted); font-size: 11px; letter-spacing: 0.12em;
+    font-family: 'JetBrains Mono', monospace;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(var(--accent), transparent);
+    animation: scrollDown 2s ease-in-out infinite;
+  }
+  @keyframes scrollDown {
+    0%   { transform: scaleY(1); opacity: 1; transform-origin: top; }
+    100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  .section-header {
+    display: flex; align-items: center; gap: 24px;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-icon::before {
+    content: ''; position: absolute; inset: 0;
+    background: inherit;
+    filter: blur(20px);
+    opacity: 0.5;
+    z-index: -1;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .section-total {
+    margin-left: auto;
+    text-align: right;
+  }
+  .section-total-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; }
+  .section-total-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  /* ─── CARDS GRID ─── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s, box-shadow 0.4s;
+    transform-style: preserve-3d;
+    cursor: default;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 20px;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(232,184,75,0.07) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .card:hover {
+    transform: translateY(-6px) rotateX(2deg) rotateY(-1deg);
+    border-color: rgba(232,184,75,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,184,75,0.15);
+  }
+
+  .card:hover::after { opacity: 1; }
+
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .card-details {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .card-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .card-row-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .card-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-total-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; }
+  .card-total-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .card-bar {
+    position: absolute; bottom: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 0 0 20px 20px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.23,1,0.32,1) 0.1s;
+  }
+  .card:hover .card-bar { transform: scaleX(1); }
+
+  /* ─── WIDE CARD (MO alone) ─── */
+  .card-wide {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+  }
+  .card-wide .card-name { font-size: 16px; margin-bottom: 0; flex: 1 1 200px; }
+  .card-wide .card-details { flex-direction: row; flex: 2 1 400px; gap: 24px; }
+  .card-wide .card-total-row { border: none; margin: 0; padding: 0; }
+
+  /* ─── SPECIALTY CARDS ─── */
+  .card-specialty { border-color: rgba(75,232,196,0.2); }
+  .card-specialty .card-total-val { color: var(--accent2); }
+  .card-specialty .card-bar { background: linear-gradient(90deg, var(--accent2), #2be8ff); }
+  .card-specialty:hover { border-color: rgba(75,232,196,0.45); }
+
+  /* ─── RESUMEN FINAL ─── */
+  .summary-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .summary-cell {
+    background: var(--card);
+    padding: 48px 40px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .summary-cell:first-child { border-radius: 24px 0 0 24px; }
+  .summary-cell:last-child  { border-radius: 0 24px 24px 0; background: linear-gradient(135deg, #1a1400, #0f1a13); }
+
+  .summary-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 12px;
+  }
+  .summary-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+  .summary-amount.cd  { color: var(--text); }
+  .summary-amount.ut  { color: var(--accent3); }
+  .summary-amount.net { color: var(--accent); }
+
+  .summary-sub {
+    margin-top: 8px;
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ─── TIMELINE DIVIDER ─── */
+  .phase-divider {
+    display: flex; align-items: center; gap: 20px;
+    max-width: 1200px; margin: 0 auto 64px;
+    padding: 0 24px;
+  }
+  .phase-line { flex: 1; height: 1px; background: var(--border); }
+  .phase-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(12,16,24,0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 10px 24px;
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    max-width: calc(100vw - 48px);
+  }
+
+  .nav-dot {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 4px 12px; border-radius: 100px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-dot:hover { color: var(--accent); background: rgba(232,184,75,0.08); }
+
+  /* ─── PARTIDA COMPLETA TABLE ─── */
+  .full-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .full-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em; color: var(--muted);
+    text-align: left; padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .full-table th:last-child { text-align: right; }
+  .full-table td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(35,45,63,0.5);
+    color: var(--text);
+  }
+  .full-table td:last-child {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .full-table td.td-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--muted);
+  }
+  .full-table tr:hover td { background: rgba(232,184,75,0.03); }
+
+  /* ─── VISIBLE ANIMATION ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.23,1,0.32,1);
+  }
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ─── STAGGER ─── */
+  .stagger-grid .card { opacity: 0; transform: translateY(30px) scale(0.97); }
+  .stagger-grid.visible .card {
+    opacity: 1; transform: translateY(0) scale(1);
+  }
+  .stagger-grid.visible .card:nth-child(1)  { transition: all 0.6s 0.05s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(2)  { transition: all 0.6s 0.10s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(3)  { transition: all 0.6s 0.15s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(4)  { transition: all 0.6s 0.20s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(5)  { transition: all 0.6s 0.25s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(6)  { transition: all 0.6s 0.30s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(7)  { transition: all 0.6s 0.35s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(8)  { transition: all 0.6s 0.40s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(9)  { transition: all 0.6s 0.45s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(10) { transition: all 0.6s 0.50s cubic-bezier(0.23,1,0.32,1); }
+  .stagger-grid.visible .card:nth-child(n+11) { transition: all 0.6s 0.55s cubic-bezier(0.23,1,0.32,1); }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-section {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+  }
+  .progress-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; letter-spacing: 0.05em;
+    margin-bottom: 24px; color: var(--muted);
+  }
+  .progress-item {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 12px;
+  }
+  .progress-name {
+    font-size: 12px; color: var(--muted); width: 200px; flex-shrink: 0;
+  }
+  .progress-bar-wrap {
+    flex: 1; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 100px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.23,1,0.32,1);
+  }
+  .progress-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--muted); width: 44px; text-align: right;
+  }
+
+  @media (max-width: 700px) {
+    .summary-grid { grid-template-columns: 1fr; }
+    .summary-cell:first-child { border-radius: 24px 24px 0 0; }
+    .summary-cell:last-child  { border-radius: 0 0 24px 24px; }
+    .nav { display: none; }
+    .card-wide { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-dot" href="#obras">01 · Obras</a>
+  <a class="nav-dot" href="#demoliciones">02 · Demo</a>
+  <a class="nav-dot" href="#cerchas">03 · Cerchas</a>
+  <a class="nav-dot" href="#cubierta">04 · Cubierta</a>
+  <a class="nav-dot" href="#cielo">05 · Cielo</a>
+  <a class="nav-dot" href="#tabiques">06 · Tabiques</a>
+  <a class="nav-dot" href="#revestimiento">07 · Rev. Int.</a>
+  <a class="nav-dot" href="#puertas">08 · Puertas</a>
+  <a class="nav-dot" href="#piso">09 · Piso</a>
+  <a class="nav-dot" href="#pisov">10 · Rev. Piso</a>
+  <a class="nav-dot" href="#exterior">11 · Exterior</a>
+  <a class="nav-dot" href="#sanitario">12 · Sanitario</a>
+  <a class="nav-dot" href="#electrico">13 · Eléct.</a>
+  <a class="nav-dot" href="#gas">14 · Gas</a>
+  <a class="nav-dot" href="#resumen">Resumen</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-badge">ICASA · PRESUPUESTO OFICIAL · 23.03.2026</div>
+  <h1 class="hero-title">REMODELACIÓN<br><span>HUINGANES</span></h1>
+  <p class="hero-sub">Proyecto · Eduardo Ulloa · Maule</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-label">Costo Directo</div>
+      <div class="meta-value gold">$23.122.072</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Utilidad (10%)</div>
+      <div class="meta-value">$2.312.207</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Valor Neto</div>
+      <div class="meta-value gold">$25.434.279</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Partidas</div>
+      <div class="meta-value">14</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- DISTRIBUCIÓN -->
+<div class="progress-section reveal" id="distribucion">
+  <div class="progress-title">DISTRIBUCIÓN POR PARTIDA</div>
+  <div id="progressBars"></div>
+</div>
+
+<!-- ─── FASE 1: OBRAS PRELIMINARES ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">FASE 1 · INICIO DE OBRA</span><div class="phase-line"></div></div>
+
+<section class="section" id="obras">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(232,184,75,0.15);">🏗️</div>
+    <div>
+      <div class="section-num">01</div>
+      <div class="section-title">Obras Preliminares</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$529.814</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card">
+      <div class="card-num">1.1</div>
+      <div class="card-name">Instalación de Faenas</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$345.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$345.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">1.2</div>
+      <div class="card-name">Instalaciones Provisorias</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">—</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$0</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">1.3</div>
+      <div class="card-name">Trazado y Replanteo</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$184.814</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$184.814</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">1.4</div>
+      <div class="card-name">Escarpe y Limpieza Zona Ampliación</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">POR COTIZAR</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DEMOLICIONES ─── -->
+<section class="section" id="demoliciones">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(232,75,110,0.15);">🔨</div>
+    <div>
+      <div class="section-num">02</div>
+      <div class="section-title">Demoliciones</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$351.655</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card">
+      <div class="card-num">2.1</div>
+      <div class="card-name">Demolición Techumbre</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">10,45</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$15.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$161.975</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">2.2</div>
+      <div class="card-name">Demolición Tabiques Interiores</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">6,08</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$51.680</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">2.3</div>
+      <div class="card-name">Retiro de Puertas</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">un</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">6</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$3.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$18.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">2.4</div>
+      <div class="card-name">Levante Baños (Aparatos + Gasfitería)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">un</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">3</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$40.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$120.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FASE 2: ESTRUCTURA ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">FASE 2 · ESTRUCTURA Y CUBIERTA</span><div class="phase-line"></div></div>
+
+<!-- ─── CERCHAS ─── -->
+<section class="section" id="cerchas">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(75,232,196,0.12);">🔩</div>
+    <div>
+      <div class="section-num">03</div>
+      <div class="section-title">Cerchas – Materiales y M.O.</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.619.284</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card">
+      <div class="card-num">3.1</div>
+      <div class="card-name">Perfil 150CA085 — 6 m</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">20 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$280.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.2</div>
+      <div class="card-name">Perfil 60CA085 — 6 m</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">12 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.680</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$80.160</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.3</div>
+      <div class="card-name">Perfil 40CA085 — 6 m</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">11 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.534</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$93.874</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.4</div>
+      <div class="card-name">Perfil Omega 39×38×0.85 — 6 m</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">23 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$7.750</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$178.250</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.5</div>
+      <div class="card-name">Tornillos Wafer #8 × ½" (Caja 500)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">3 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$25.500</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.6</div>
+      <div class="card-name">Fabricación de Cercha — Armado en Piso</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$35.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$280.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.7</div>
+      <div class="card-name">Montaje e Instalación — Izaje y Fijación a Muro</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$25.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$200.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">3.8</div>
+      <div class="card-name">Instalación de Omegas</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">107</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$4.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$481.500</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CUBIERTA ─── -->
+<section class="section" id="cubierta">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(232,184,75,0.15);">🏠</div>
+    <div>
+      <div class="section-num">04</div>
+      <div class="section-title">Cubierta</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$3.365.704</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card">
+      <div class="card-num">4.1</div>
+      <div class="card-name">OSB Estructural 11 mm (122×244 cm)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">45 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$652.500</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.2</div>
+      <div class="card-name">Pernos Zincados para OSB (Caja 1000)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$28.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$28.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.3</div>
+      <div class="card-name">Fieltro Asfáltico 15 lb (Rollo 10 m)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">14 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$18.699</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$261.786</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.4</div>
+      <div class="card-name">Grapas de Anclaje (Caja 1000)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$6.500</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.5</div>
+      <div class="card-name">Plancha Zinc Acanalada 0,35 mm (2,5 m)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">84 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.058</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$508.872</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.6</div>
+      <div class="card-name">Pernos Hexagonales c/EPDM (Bolsas 100)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">6 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$10.115</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$60.690</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.7</div>
+      <div class="card-name">Caballetes / Limahoyas (Tiras 2 m)</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$9.282</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$74.256</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">4.8</div>
+      <div class="card-name">Mano de Obra — Instalación Completa</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">119,2</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.875</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$1.773.100</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FASE 3: INTERIORES ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">FASE 3 · TERMINACIONES INTERIORES</span><div class="phase-line"></div></div>
+
+<!-- ─── CIELO ─── -->
+<section class="section" id="cielo">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(255,255,255,0.07);">🪟</div>
+    <div>
+      <div class="section-num">05</div>
+      <div class="section-title">Cielo — Yeso Cartón</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$2.534.060</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">5.1</div><div class="card-name">Plancha Yeso Cartón ST 10mm (1.2×2.4)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">41 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.460</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$264.860</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.2</div><div class="card-name">Perfil Montante 60mm (3 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">61 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$3.200</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$195.200</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.3</div><div class="card-name">Perfil Canal 62mm (3 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">15 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$2.800</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$42.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.4</div><div class="card-name">Tornillos (Cajas 500 un)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">4 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$32.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.5</div><div class="card-name">Masilla para Juntas (Tineta 20 kg)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">3 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$18.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$54.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.6</div><div class="card-name">Pasta Muro (Tineta 20 kg)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">10 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$145.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.7</div><div class="card-name">Cinta de Papel (Rollo 75 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">2 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$13.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.8</div><div class="card-name">Pintura Látex/Esmalte (Tineta 5 gl)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">2 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$85.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$170.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.9</div><div class="card-name">Varios — Lijas, Sellador, Anclajes</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">1</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$40.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$40.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">5.10</div><div class="card-name">Mano de Obra — Cielo Completo</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div><div class="card-row"><span>P. Global</span><span class="card-row-val">$1.578.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$1.578.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── TABIQUES ─── -->
+<section class="section" id="tabiques">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(75,232,196,0.12);">🧱</div>
+    <div>
+      <div class="section-num">06</div>
+      <div class="section-title">Tabiques Metalcon</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.088.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">6.1</div><div class="card-name">Nueva Habitación</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">12,25</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$25.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$306.250</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">6.2</div><div class="card-name">Tabique Pasillo Sur</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">14,95</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$25.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$373.750</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">6.3</div><div class="card-name">Mano de Obra — Tabiques</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">27,2</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$15.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$408.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── REVESTIMIENTO INTERIOR ─── -->
+<section class="section" id="revestimiento">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(200,200,255,0.1);">🎨</div>
+    <div>
+      <div class="section-num">07</div>
+      <div class="section-title">Revestimiento Interior</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.621.645</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">7.1</div><div class="card-name">Yeso Cartón (Volcanita) 10 mm</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">38,63</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$9.208</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$355.715</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">7.2</div><div class="card-name">Yeso Cartón RH (Volcanita) 12 mm</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">27,07</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$378.980</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">7.4</div><div class="card-name">Instalación de Planchas — Pegado y Plomo</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">65,7</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$5.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$361.350</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">7.5</div><div class="card-name">Tratamiento de Juntas y Empastado Total</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">65,7</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$4.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$295.650</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">7.6</div><div class="card-name">Pintura 2 Manos — Muros Interiores</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">65,7</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$3.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$229.950</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── PUERTAS ─── -->
+<section class="section" id="puertas">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(232,184,75,0.12);">🚪</div>
+    <div>
+      <div class="section-num">08</div>
+      <div class="section-title">Puertas</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.667.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">8.1</div><div class="card-name">Hoja de Puerta Masonita (HDF) 75×200 cm</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$45.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$360.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.2</div><div class="card-name">Marco (Jamba) Pino o MDF — Kit Muro Estándar</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$32.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$256.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.3</div><div class="card-name">Pilastras (Molduras) — Ambos lados</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">16 juegos</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$224.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.4</div><div class="card-name">Cerradura — Pomo o Manija (Baño/Recámara)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$18.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$144.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.5</div><div class="card-name">Tope de Puerta — Piso o Pared</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$3.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$28.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.6</div><div class="card-name">Bisagras 3,5"×3,5" — 3 por Puerta</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">24 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$2.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$60.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.7</div><div class="card-name">Pintura/Sellador — Esmalte + Solventes</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">1 GL</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$75.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$75.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">8.8</div><div class="card-name">Mano de Obra — Puertas Completas</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$65.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$520.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── PISO NUEVA HABITACIÓN ─── -->
+<section class="section" id="piso">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(150,100,50,0.2);">🪵</div>
+    <div>
+      <div class="section-num">09</div>
+      <div class="section-title">Piso Nueva Habitación (3,57×3,53 m)</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$425.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">9.1</div><div class="card-name">Polines Pino Impregnado 4" × 2,4 m (cortados a 1,2 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">5 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$9.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$47.500</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.2</div><div class="card-name">Vigas Pino Impregnado 2×6" — Marco y Maestras</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$14.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$112.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.3</div><div class="card-name">Vigas Pino Impregnado 2×4" — Cadeneros</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">10 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$85.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.4</div><div class="card-name">Terciado Estructural 15 mm (1,22×2,44 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">5 pl</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$22.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$110.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.5</div><div class="card-name">Cemento (Saco 25 kg) — Bases</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">5 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$4.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$22.500</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.6</div><div class="card-name">Tornillos Turbo/Estructurales Madera-Madera</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">1 caja</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$15.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$15.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.7</div><div class="card-name">Tornillos CRS — Para Terciado</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">1 caja</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$8.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">9.8</div><div class="card-name">Fijaciones y Herrajes — Ángulos o Estribos</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div><div class="card-row"><span>P. Global</span><span class="card-row-val">$25.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$25.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── REVESTIMIENTO PISO ─── -->
+<section class="section" id="pisov">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(75,180,232,0.12);">🏡</div>
+    <div>
+      <div class="section-num">10</div>
+      <div class="section-title">Revestimiento Piso</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.476.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card"><div class="card-num">10.1</div><div class="card-name">Piso Vinílico SPC Clic 4 mm + Manta 1 mm</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">80</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$9.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$720.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">10.2</div><div class="card-name">Instalación — Mano de Obra</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div><div class="card-row"><span>Cantidad</span><span class="card-row-val">80</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$520.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">10.3</div><div class="card-name">Junquillos — Terminación Perímetro (2,4 m)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">36 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$4.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$162.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">10.4</div><div class="card-name">Perfiles de Puerta — Transición entre Recintos</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">6 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$8.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$48.000</span></div><div class="card-bar"></div></div>
+    <div class="card"><div class="card-num">10.5</div><div class="card-name">Adhesivo Montaje — Para Junquillos (Agorex/Montack)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">4 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$6.500</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$26.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── FASE 4: EXTERIOR ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">FASE 4 · FACHADA EXTERIOR</span><div class="phase-line"></div></div>
+
+<!-- ─── REVESTIMIENTO EXTERIOR ─── -->
+<section class="section" id="exterior">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(180,140,80,0.15);">🏘️</div>
+    <div>
+      <div class="section-num">11</div>
+      <div class="section-title">Revestimiento Exterior</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$4.188.910</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card">
+      <div class="card-num">11.1</div>
+      <div class="card-name">Siding 6×19×366 — Color Nogal Volcanboard</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">124,3</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$13.500</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$1.678.050</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">11.2</div>
+      <div class="card-name">Estructura + Membrana + Clavos</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">124,3</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$5.200</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$646.360</span></div>
+      <div class="card-bar"></div>
+    </div>
+    <div class="card">
+      <div class="card-num">11.3</div>
+      <div class="card-name">Mano de Obra — Instalación Exterior</div>
+      <div class="card-details">
+        <div class="card-row"><span>Unidad</span><span class="card-row-val">m²</span></div>
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">124,3</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$15.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL MO</span><span class="card-total-val">$1.864.500</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FASE 5: ESPECIALIDADES ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">FASE 5 · ESPECIALIDADES</span><div class="phase-line"></div></div>
+
+<!-- ─── SANITARIO ─── -->
+<section class="section" id="sanitario">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(75,232,196,0.15);">🚿</div>
+    <div>
+      <div class="section-num">12</div>
+      <div class="section-title">Sanitario — Cocina + Baño 1 + Baño 2</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$1.625.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card card-specialty"><div class="card-num">12.1</div><div class="card-name">Red Agua Fría (AF)</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div><div class="card-row"><span>P. Global</span><span class="card-row-val">$90.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$90.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">12.2</div><div class="card-name">Red Agua Caliente (AC)</div><div class="card-details"><div class="card-row"><span>Unidad</span><span class="card-row-val">GL</span></div><div class="card-row"><span>P. Global</span><span class="card-row-val">$130.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$130.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">12.3</div><div class="card-name">Conexión Aparatos — Lavaplatos, WC, Lavamanos, Ducha</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">7 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$145.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$1.015.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">12.4</div><div class="card-name">Kit WC + Lavamanos</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">1 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$150.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$150.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">12.5</div><div class="card-name">Receptáculo in Situ — Cerámica (Ducha)</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">2 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$120.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$240.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── ELECTRICIDAD ─── -->
+<section class="section" id="electrico">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(255,220,50,0.12);">⚡</div>
+    <div>
+      <div class="section-num">13</div>
+      <div class="section-title">Electricidad</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$2.480.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card card-specialty"><div class="card-num">13.1</div><div class="card-name">Centros Iluminación</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">12 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$110.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$1.320.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">13.2</div><div class="card-name">Centros Enchufes</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">8 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$110.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$880.000</span></div><div class="card-bar"></div></div>
+    <div class="card card-specialty"><div class="card-num">13.3</div><div class="card-name">Tablero Eléctrico</div><div class="card-details"><div class="card-row"><span>Cantidad</span><span class="card-row-val">1 un</span></div><div class="card-row"><span>P. Unitario</span><span class="card-row-val">$280.000</span></div></div><div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$280.000</span></div><div class="card-bar"></div></div>
+  </div>
+</section>
+
+<!-- ─── GAS ─── -->
+<section class="section" id="gas">
+  <div class="section-header reveal">
+    <div class="section-icon" style="background: rgba(255,120,50,0.12);">🔥</div>
+    <div>
+      <div class="section-num">14</div>
+      <div class="section-title">Gas</div>
+    </div>
+    <div class="section-total">
+      <div class="section-total-label">SUBTOTAL</div>
+      <div class="section-total-val">$150.000</div>
+    </div>
+  </div>
+  <div class="cards-grid stagger-grid">
+    <div class="card card-specialty">
+      <div class="card-num">14.1</div>
+      <div class="card-name">Centro Gas — Instalación y Conexión</div>
+      <div class="card-details">
+        <div class="card-row"><span>Cantidad</span><span class="card-row-val">1 un</span></div>
+        <div class="card-row"><span>P. Unitario</span><span class="card-row-val">$150.000</span></div>
+      </div>
+      <div class="card-total-row"><span class="card-total-label">TOTAL</span><span class="card-total-val">$150.000</span></div>
+      <div class="card-bar"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESUMEN FINAL ─── -->
+<div class="phase-divider reveal"><div class="phase-line"></div><span class="phase-tag">RESUMEN ECONÓMICO</span><div class="phase-line"></div></div>
+
+<div class="summary-section" id="resumen">
+  <div class="summary-grid reveal">
+    <div class="summary-cell">
+      <div class="summary-label">COSTO DIRECTO DE OBRA</div>
+      <div class="summary-amount cd">$23.122.072</div>
+      <div class="summary-sub">14 partidas · materiales + mano de obra</div>
+    </div>
+    <div class="summary-cell" style="background: #161018;">
+      <div class="summary-label">UTILIDAD EMPRESA (10%)</div>
+      <div class="summary-amount ut">$2.312.207</div>
+      <div class="summary-sub">Margen sobre costo directo</div>
+    </div>
+    <div class="summary-cell">
+      <div class="summary-label">VALOR NETO TOTAL</div>
+      <div class="summary-amount net">$25.434.279</div>
+      <div class="summary-sub">Sin IVA · sujeto a ingeniería final</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 64px; text-align:center; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; padding-bottom: 80px;">
+    <div>ICASA · contacto@icasa.cl · www.icasa.cl</div>
+    <div style="margin-top: 8px;">PRESUPUESTO VÁLIDO HASTA 23 DE ABRIL 2026 · MAULE, CHILE</div>
+  </div>
+</div>
+
+<script>
+// ─── 3D CARD TILT ───
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -6;
+    const rotY = ((x - cx) / cx) * 6;
+    card.style.transform = `translateY(-6px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    card.style.setProperty('--mx', `${(x/rect.width)*100}%`);
+    card.style.setProperty('--my', `${(y/rect.height)*100}%`);
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── INTERSECTION OBSERVER ───
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal, .stagger-grid').forEach(el => io.observe(el));
+
+// ─── PROGRESS BARS ───
+const partidas = [
+  { name: '11 · Revestimiento Exterior', val: 4188910, color: '#e8b84b' },
+  { name: '04 · Cubierta',               val: 3365704, color: '#e8b84b' },
+  { name: '05 · Cielo',                  val: 2534060, color: '#c4a040' },
+  { name: '13 · Electricidad',           val: 2480000, color: '#4be8c4' },
+  { name: '08 · Puertas',                val: 1667000, color: '#c4a040' },
+  { name: '03 · Cerchas',                val: 1619284, color: '#c4a040' },
+  { name: '07 · Rev. Interior',          val: 1621645, color: '#c4a040' },
+  { name: '10 · Rev. Piso',              val: 1476000, color: '#c4a040' },
+  { name: '06 · Tabiques',               val: 1088000, color: '#6b7a9a' },
+  { name: '12 · Sanitario',              val: 1625000, color: '#4be8c4' },
+  { name: '09 · Piso Hab.',              val: 425000,  color: '#6b7a9a' },
+  { name: '02 · Demoliciones',           val: 351655,  color: '#e84b6e' },
+  { name: '01 · Obras Prel.',            val: 529814,  color: '#6b7a9a' },
+  { name: '14 · Gas',                    val: 150000,  color: '#4be8c4' },
+];
+const maxVal = Math.max(...partidas.map(p => p.val));
+const container = document.getElementById('progressBars');
+partidas.sort((a,b) => b.val - a.val).forEach(p => {
+  const pct = Math.round((p.val / maxVal) * 100);
+  const formatted = '$' + p.val.toLocaleString('es-CL');
+  container.innerHTML += `
+    <div class="progress-item">
+      <div class="progress-name">${p.name}</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" data-pct="${pct}" style="background: ${p.color};"></div>
+      </div>
+      <div class="progress-pct">${formatted.replace(/\B(?=(\d{3})+(?!\d))/g, '.')}</div>
+    </div>`;
+});
+
+// Animate progress bars on visibility
+const progressObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.progress-bar-fill').forEach((bar, i) => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.pct + '%';
+        }, i * 60);
+      });
+      progressObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+progressObs.observe(document.getElementById('distribucion'));
+</script>
+</body>
+</html>
